@@ -63,3 +63,17 @@ const images = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+const ulGallery = document.querySelector('.gallery');
+const markup = images
+  .map(
+    ({ preview, original, description }) =>
+      `<li class="gallery-item">
+        <a class="gallery-link" href=${original}>
+            <img class="gallery-image" src=${preview} data-source=${original} alt=${description}/>
+        </a>
+    </li>`
+  )
+  .join('');
+
+ulGallery.insertAdjacentHTML('beforeend', markup);
