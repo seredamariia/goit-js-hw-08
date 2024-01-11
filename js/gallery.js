@@ -75,5 +75,13 @@ const markup = images
     </li>`
   )
   .join('');
-
 ulGallery.insertAdjacentHTML('beforeend', markup);
+
+ulGallery.addEventListener('click', event => {
+  event.preventDefault();
+  if (event.currentTarget === event.target) {
+    return;
+  }
+
+  console.log(event.target.dataset.source);
+});
