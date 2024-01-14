@@ -85,7 +85,16 @@ ulGallery.addEventListener('click', event => {
 
   const instance = basicLightbox.create(`
     <img src=${event.target.dataset.source} width="1112" height="640">
-`);
+  `);
 
   instance.show();
+
+  const closeModal = event => {
+    if (event.code === 'Escape') {
+      instance.close();
+      document.removeEventListener('keydown', closeModal);
+    }
+  };
+
+  document.addEventListener('keydown', closeModal);
 });
