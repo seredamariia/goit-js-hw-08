@@ -69,8 +69,8 @@ const markup = images
   .map(
     ({ preview, original, description }) =>
       `<li class="gallery-item">
-        <a class="gallery-link" href=${original}>
-            <img class="gallery-image" src=${preview} data-source=${original} alt=${description}/>
+        <a class="gallery-link" href="${original}">
+            <img class="gallery-image" src="${preview}" data-source="${original}" alt="${description}"/>
         </a>
     </li>`
   )
@@ -83,18 +83,23 @@ ulGallery.addEventListener('click', event => {
     return;
   }
 
-  const instance = basicLightbox.create(`
-    <img src=${event.target.dataset.source} width="1112" height="640">
-  `);
-
-  instance.show();
-
   const closeModal = event => {
     if (event.code === 'Escape') {
       instance.close();
-      document.removeEventListener('keydown', closeModal);
     }
   };
 
-  document.addEventListener('keydown', closeModal);
+  const instance = basicLightbox.create(
+    `<img src=${event.target.dataset.source} width="1112" height="640">`,
+    {
+      onShow: () => {
+        document.addEventListener('keydown', closeModal);
+      },
+      onClose: () => {
+        document.removeEventListener('keydown', closeModal);
+      },
+    }
+  );
+
+  instance.show();
 });
