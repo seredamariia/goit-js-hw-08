@@ -79,18 +79,12 @@ ulGallery.insertAdjacentHTML('beforeend', markup);
 
 ulGallery.addEventListener('click', event => {
   event.preventDefault();
-  if (event.currentTarget === event.target) {
+  if (!event.target.classList.contains('gallery-image')) {
     return;
   }
 
-  const closeModal = event => {
-    if (event.code === 'Escape') {
-      instance.close();
-    }
-  };
-
   const instance = basicLightbox.create(
-    `<img src=${event.target.dataset.source} width="1112" height="640">`,
+    `<img src="${event.target.dataset.source}">`,
     {
       onShow: () => {
         document.addEventListener('keydown', closeModal);
@@ -103,3 +97,9 @@ ulGallery.addEventListener('click', event => {
 
   instance.show();
 });
+
+const closeModal = event => {
+  if (event.code === 'Escape') {
+    instance.close();
+  }
+};
